@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "product": "pipmcp",
+  "credential": "PIPMCP_API_KEY",
+  "skills": [
+    {
+      "name": "pipmcp-google-contacts",
+      "description": "Connect AI agents to Google Contacts using one PipMCP API key and actual hosted tool discovery."
+    }
+  ],
+  "files": {
+    "skills/pipmcp-google-contacts/SKILL.md": "1694ddc4c7df17a97d8529d28a4729dd6d73fcb3e8948b3430f61f549e8b6d71"
+  }
+}

@@ -1,0 +1,320 @@
+{
+  "id": "google-contacts",
+  "appSlug": "google-contacts",
+  "name": "Google Contacts",
+  "version": "0.2.0",
+  "baseUrl": "https://people.googleapis.com/v1",
+  "auth": {
+    "type": "oauth-access-token",
+    "env": "GOOGLE_CONTACTS_ACCESS_TOKEN"
+  },
+  "tools": [
+    {
+      "name": "list_connections",
+      "description": "List connections.",
+      "method": "GET",
+      "path": "/people/me/connections",
+      "readOnly": true,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "personFields": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048,
+            "description": "Value"
+          },
+          "pageSize": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000
+          },
+          "pageToken": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048,
+            "description": "Value"
+          }
+        },
+        "required": [
+          "personFields"
+        ],
+        "additionalProperties": false
+      },
+      "bindings": {
+        "path": [],
+        "query": {
+          "personFields": "personFields",
+          "pageSize": "pageSize",
+          "pageToken": "pageToken"
+        },
+        "body": {}
+      },
+      "sampleArguments": {
+        "personFields": "names,emailAddresses",
+        "pageSize": 10
+      },
+      "pagination": {
+        "type": "cursor",
+        "cursorInput": "pageToken",
+        "nextCursorPath": "nextPageToken"
+      },
+      "provenance": [
+        "https://developers.google.com/people/api/rest/v1/people.connections/list",
+        "https://developers.google.com/people/api/rest/v1/people/get",
+        "https://developers.google.com/people/api/rest/v1/people/createContact"
+      ],
+      "approvalRequired": false,
+      "evidence": {
+        "providerLiveValidation": "not-run",
+        "localValidation": "provider-request-fixture"
+      }
+    },
+    {
+      "name": "get_contact",
+      "description": "Get contact.",
+      "method": "GET",
+      "path": "/people/{personId}",
+      "readOnly": true,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "personId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048,
+            "description": "Suffix of a resource name: c123 from people/c123"
+          },
+          "personFields": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048,
+            "description": "Value"
+          }
+        },
+        "required": [
+          "personId",
+          "personFields"
+        ],
+        "additionalProperties": false
+      },
+      "bindings": {
+        "path": [
+          "personId"
+        ],
+        "query": {
+          "personFields": "personFields"
+        },
+        "body": {}
+      },
+      "sampleArguments": {
+        "personId": "c123",
+        "personFields": "names,emailAddresses"
+      },
+      "provenance": [
+        "https://developers.google.com/people/api/rest/v1/people.connections/list",
+        "https://developers.google.com/people/api/rest/v1/people/get",
+        "https://developers.google.com/people/api/rest/v1/people/createContact"
+      ],
+      "approvalRequired": false,
+      "evidence": {
+        "providerLiveValidation": "not-run",
+        "localValidation": "provider-request-fixture"
+      }
+    },
+    {
+      "name": "create_contact",
+      "description": "Create contact.",
+      "method": "POST",
+      "path": "/people:createContact",
+      "readOnly": false,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "personFields": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2048,
+            "description": "Value"
+          },
+          "names": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "givenName": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 2048,
+                  "description": "Value"
+                },
+                "familyName": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 2048,
+                  "description": "Value"
+                }
+              },
+              "required": [
+                "givenName"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 1
+          },
+          "emailAddresses": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "string",
+                  "format": "email"
+                }
+              },
+              "required": [
+                "value"
+              ],
+              "additionalProperties": false
+            },
+            "maxItems": 1000
+          }
+        },
+        "required": [
+          "personFields",
+          "names"
+        ],
+        "additionalProperties": false
+      },
+      "bindings": {
+        "path": [],
+        "query": {
+          "personFields": "personFields"
+        },
+        "body": {
+          "names": "names",
+          "emailAddresses": "emailAddresses"
+        }
+      },
+      "sampleArguments": {
+        "personFields": "names,emailAddresses",
+        "names": [
+          {
+            "givenName": "Reviewed",
+            "familyName": "Contact"
+          }
+        ],
+        "emailAddresses": [
+          {
+            "value": "reviewed@example.com"
+          }
+        ]
+      },
+      "provenance": [
+        "https://developers.google.com/people/api/rest/v1/people.connections/list",
+        "https://developers.google.com/people/api/rest/v1/people/get",
+        "https://developers.google.com/people/api/rest/v1/people/createContact"
+      ],
+      "approvalRequired": true,
+      "evidence": {
+        "providerLiveValidation": "not-run",
+        "localValidation": "provider-request-fixture"
+      }
+    }
+  ],
+  "workflow": {
+    "name": "Inspect personal contacts and create a reviewed contact",
+    "description": "Inspect personal contacts and create a reviewed contact. Read provider data first, then explicitly approve the selected change with operator write opt-in and a unique per-call approval key.",
+    "steps": [
+      "list_connections",
+      "get_contact",
+      "create_contact"
+    ]
+  },
+  "provenance": [
+    "https://developers.google.com/people/api/rest/v1/people.connections/list",
+    "https://developers.google.com/people/api/rest/v1/people/get",
+    "https://developers.google.com/people/api/rest/v1/people/createContact"
+  ],
+  "verification": "mock-only",
+  "providerLiveValidation": "not-run",
+  "capabilityEvidence": {
+    "local": {
+      "level": "Tested",
+      "operations": [
+        {
+          "name": "list_connections",
+          "level": "Tested",
+          "evidenceRefs": [
+            "Provider request/stdio contract tests"
+          ],
+          "method": "contract-fixture"
+        },
+        {
+          "name": "get_contact",
+          "level": "Tested",
+          "evidenceRefs": [
+            "Provider request/stdio contract tests"
+          ],
+          "method": "contract-fixture"
+        },
+        {
+          "name": "create_contact",
+          "level": "Tested",
+          "evidenceRefs": [
+            "Provider request/stdio contract tests"
+          ],
+          "method": "contract-fixture"
+        }
+      ],
+      "evidenceRefs": [
+        "Provider request/stdio contract tests"
+      ],
+      "mode": "local"
+    },
+    "managed": {
+      "level": "Documented",
+      "operations": [
+        {
+          "name": "list_connections",
+          "level": "Documented",
+          "evidenceRefs": [],
+          "method": "documentation"
+        },
+        {
+          "name": "get_contact",
+          "level": "Documented",
+          "evidenceRefs": [],
+          "method": "documentation"
+        },
+        {
+          "name": "create_contact",
+          "level": "Documented",
+          "evidenceRefs": [],
+          "method": "documentation"
+        }
+      ],
+      "evidenceRefs": [],
+      "mode": "managed"
+    }
+  },
+  "requiredScopes": {
+    "read": [
+      "https://www.googleapis.com/auth/contacts.readonly"
+    ],
+    "write": [
+      "https://www.googleapis.com/auth/contacts"
+    ]
+  },
+  "limitations": [
+    "personId is the suffix returned in resourceName people/c123, not the whole slash-separated resource name. Create-contact requests should run sequentially for one user."
+  ],
+  "repoId": "google-contacts-mcp",
+  "product": "pipmcp",
+  "artifactType": "connector",
+  "sourceRevision": "362f669a46c70d91da057d9a6b8261310bc105e3a8a342ed5fbaa7f3fc74f0b9",
+  "managedAvailability": {
+    "status": "listed",
+    "checkedAt": "2026-11-08T13:20:45.156456+00:00"
+  }
+}

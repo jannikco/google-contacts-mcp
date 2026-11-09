@@ -1,3 +1,70 @@
+# Review an address-book entry before adding another
+
+**Google Contacts + your AI assistant · powered by PipMCP**
+
+You want to review an address-book entry before adding another, using the account your team has actually connected.
+
+**Made for:** Consultants and assistants
+
+For real use, you will need PipMCP and access to Google Contacts.
+
+## Ask your AI to set this up
+
+Paste this into a coding assistant that can open project files and run commands, such as Codex, Claude Code or Grok Build. You do not need to understand the code first.
+
+```text
+Help me use this project: https://github.com/jannikco/google-contacts-mcp
+
+I'm not a programmer. My goal is: Review an address-book entry before adding another.
+
+Read the project instructions and set it up in a new folder without overwriting my work.
+Guide me through PipMCP and its private key setup; never ask me to paste secrets into this
+chat. Run a documented sample-data demo if available, then help me get a first small
+result from my connected app. Explain the result in plain English. Ask before changing
+records, sending messages or publishing anything.
+```
+
+## Three useful things to ask for
+
+```text
+List my contacts and inspect the person I identify.
+```
+
+```text
+Prepare a new contact using details I provide. Show the name and contact details and ask
+before saving it.
+```
+
+```text
+Prepare a contact-review list from the address-book entries we inspected before I tidy my
+customer handover.
+```
+
+## Your path to a real result
+
+```mermaid
+flowchart LR
+  A["Ask your AI"] --> B["Connect PipMCP"] --> C["Review an address-book<br/>entry before adding…"] --> D["Review together"]
+```
+
+1. [Open PipMCP setup](https://pipmcp.com/github/start?app=google-contacts&integration=google-contacts-mcp&utm_source=github&utm_campaign=github-google-contacts-mcp&utm_content=people-first-readme) and sign in or create your account.
+2. Connect the app in PipMCP with the permissions you want to grant.
+3. Create the product API key through the official setup, add it privately to your AI project's environment, and ask your AI to try a small read.
+
+**What to expect:** Connect Google Contacts in your PipMCP account, then use your PipMCP key for the supported actions. Review proposed changes before they are sent. Results depend on the connected account and its permissions; check the returned outcome before relying on it.
+
+Add your PipMCP key privately in your project settings. Keep keys out of chat and public repositories.
+
+## Keep going
+
+- [Find another useful integration](https://github.com/jannikco/pipmcp-connectors)
+- [Connect an API you control](https://github.com/jannikco/openapi-to-mcp)
+- [Try the GitHub project](https://github.com/jannikco/github-mcp)
+
+<details>
+<summary>Technical reference: installation commands, exact capabilities and troubleshooting</summary>
+
+<!-- people-first:technical:start -->
 # Google Contacts MCP server
 
 **Use Google Contacts from Claude Code, Codex, Grok Build and MCP clients through PipMCP. One PipMCP API key connects this package to private execution.**
@@ -61,3 +128,7 @@ Transport, package and agent fixtures are tested. Authentication/provider access
 ## Provider setup reference
 
 [Official provider documentation](https://developers.google.com/people/api/rest/v1/people.connections/list). Credentials are entered in PipMCP; this package does not accept or store provider secrets.
+
+<!-- people-first:technical:end -->
+
+</details>
